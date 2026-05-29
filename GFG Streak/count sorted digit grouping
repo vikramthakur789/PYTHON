@@ -1,0 +1,24 @@
+class Solution:
+    def validGroups(self, s):
+        # code here
+        from functools import lru_cache
+        
+        n = len(s)
+        
+        @lru_cache(None)
+        def solve(index, prev_sum):
+            if index == n:
+                return 1
+                
+            ans = 0
+            curr_sum = 0
+            
+            for i in range(index, n):
+                curr_sum += int(s[i])
+                
+                if curr_sum >= prev_sum:
+                    ans += solve(i + 1, curr_sum)
+                    
+            return ans  
+            
+        return solve(0,0)    
